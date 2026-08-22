@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TorBox Web Downloads settings</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="page narrow">
+      <header>
+        <p class="eyebrow">Zen Browser extension</p>
+        <h1>TorBox Web Downloads</h1>
+        <p>Automatic discovery reads link destinations on HTTP and HTTPS pages after setup. It does not read page text, forms, cookies, or media.</p>
+      </header>
+
+      <section class="card" aria-labelledby="api-heading">
+        <h2 id="api-heading">TorBox API key</h2>
+        <p>Zen extension storage is local but is not an operating-system credential vault. The saved key is never shown again.</p>
+        <form id="api-form">
+          <label for="api-key">New API key</label>
+          <input id="api-key" name="apiKey" type="password" autocomplete="off" required>
+          <div class="button-row">
+            <button type="submit">Save and check</button>
+            <button id="clear-key" type="button" class="secondary">Clear saved key</button>
+          </div>
+        </form>
+        <p id="api-status" class="status" role="status"></p>
+      </section>
+
+      <section class="card" aria-labelledby="discovery-heading">
+        <h2 id="discovery-heading">Discovery</h2>
+        <label class="toggle"><input id="global-paused" type="checkbox"> Pause automatic scanning everywhere</label>
+        <label class="toggle"><input id="include-nsfw" type="checkbox"> Include Hosters marked NSFW by TorBox</label>
+        <h3>Paused hostnames</h3>
+        <div id="excluded-hosts"><p class="muted">No hostname exclusions.</p></div>
+      </section>
+
+      <section class="card" aria-labelledby="notification-heading">
+        <h2 id="notification-heading">Notifications</h2>
+        <label class="toggle"><input id="notifications" type="checkbox"> Notify once when an ordinary batch is ready or needs attention</label>
+        <p class="muted">Private batches never send notifications.</p>
+      </section>
+
+      <p id="page-status" class="status" role="status"></p>
+    </main>
+    <script src="settings.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,29 @@
+{
+  "name": "torbox-zen-extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint:extension": "web-ext lint --source-dir dist",
+    "smoke:zen": "node scripts/smoke-zen.mjs",
+    "package": "pnpm build && web-ext build --source-dir dist --artifacts-dir web-ext-artifacts --overwrite-dest",
+    "verify": "pnpm test && pnpm typecheck && pnpm build && pnpm lint:extension"
+  },
+  "dependencies": {
+    "@noble/hashes": "2.3.0"
+  },
+  "devDependencies": {
+    "@types/firefox-webext-browser": "143.0.0",
+    "esbuild": "0.28.2",
+    "jsdom": "30.0.1",
+    "typescript": "7.0.2",
+    "vitest": "4.1.11",
+    "web-ext": "10.6.0"
+  }
+}

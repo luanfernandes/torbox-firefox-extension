@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "TorBox Web Downloads",
+  "version": "0.1.0",
+  "description": "Find supported Hoster links on the current page and prepare them through TorBox.",
+  "permissions": ["storage", "alarms"],
+  "optional_permissions": ["notifications"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "action": {
+    "default_title": "TorBox Web Downloads",
+    "default_popup": "popup.html",
+    "default_area": "navbar",
+    "default_icon": {
+      "48": "icons/torbox-48.svg",
+      "96": "icons/torbox-96.svg"
+    }
+  },
+  "options_ui": {
+    "page": "settings.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["scanner.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "48": "icons/torbox-48.svg",
+    "96": "icons/torbox-96.svg"
+  },
+  "incognito": "spanning",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "torbox-web-downloads@local",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["authenticationInfo", "websiteContent"]
+      }
+    }
+  }
+}

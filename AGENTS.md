@@ -1,0 +1,31 @@
+# TorBox browser extension
+
+Build a WebExtension for the latest stable Zen Browser on Windows. Keep the implementation compatible with Firefox WebExtension APIs. It scans eligible pages automatically for candidate links from the TorBox Hoster catalog, accepts multi-link selections, creates TorBox Web Downloads, and generates individual file links only when the user asks.
+
+## Current phase
+
+V1 is implemented and passes automated verification plus isolated Zen 154 installation. Authenticated TorBox response checks in `docs/implementation-plan.md` still require a user-owned key and controlled test files. The design-tree interview is paused after Q44 and resumes at Q45.
+
+## Working rules
+
+- Verify v1 on the latest stable Zen Browser on Windows. Treat other browsers and operating systems as later work.
+- Scan every eligible top-level HTTP and HTTPS page automatically. Keep the required broad site access visible in the manifest, onboarding, store listing, and privacy disclosure.
+- Keep the TorBox token and every TorBox request in the background context. Page-scanning code receives public matcher data, publishes counts automatically, and returns full matched candidates only when the popup requests them.
+- Treat a user batch as an extension queue. The TorBox WebDL API currently creates one link per request.
+- Use Web Download endpoints under `/v1/api/webdl`. Torrent IDs and `/torrents/requestdl` are outside this product flow.
+- Generate requested file links only after an explicit user action. Present them as clickable links and never start a local download automatically.
+- Keep generated links in batch-tab memory. Store the TorBox API key and unresolved ordinary-batch passwords locally, never in synced storage. Delete each password when its create outcome becomes known, the user cancels it, or the 24-hour window ends.
+- Refresh the hoster catalog every 24 hours and revalidate selected hosters immediately before creating a batch.
+- Make the smallest change that meets the current acceptance criteria. State uncertain assumptions before implementation and verify each phase before moving on.
+
+## Context pointers
+
+- **Product behavior:** Read `docs/product-spec.md` before changing automatic scanning, batches, UI states, privacy behavior, generated links, or acceptance criteria.
+- **Architecture:** Read `docs/architecture.md` before changing permissions, component boundaries, storage, matching, scheduling, API calls, batch state, or link generation.
+- **Delivery plan:** Read `docs/implementation-plan.md` before starting implementation, adding dependencies, planning tests, or packaging a release.
+- **Domain language:** Read `CONTEXT.md` before naming product concepts, models, messages, tests, or issues.
+- **TorBox API contract:** Read `docs/research/torbox-api.md` before implementing or reviewing a TorBox request, response, rate limit, or batch assumption. Recheck the live official contract when that note is stale.
+- **Grilling:** Read `docs/grilling-log.md` before resuming the design interview. Continue at Q45 and preserve Q1-Q44 unless the owner explicitly revises one.
+- **Issue tracker:** Read `docs/agents/issue-tracker.md` when creating, reading, updating, or closing GitHub issues.
+- **Triage:** Read `docs/agents/triage-labels.md` when applying or interpreting triage labels.
+- **Domain documentation:** Read `docs/agents/domain.md` when editing the glossary or recording an architectural decision.
