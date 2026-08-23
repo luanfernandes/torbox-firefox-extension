@@ -4,9 +4,9 @@ Use this copy for the first public Firefox and Zen listing. Recheck every statem
 
 ## Identity
 
-- Name: `TorBox Web Downloads (Unofficial)`
-- Suggested slug: `torbox-web-downloads-unofficial`
-- Extension ID: `torbox-web-downloads@luanfernandes.github.io`
+- Name: `Torbox Web Helper`
+- Suggested slug: `torbox-web-helper`
+- Extension ID: `torbox-web-helper@luanfernandes.github.io`
 - License: MIT
 - Homepage: https://github.com/luanfernandes/torbox-firefox-extension
 - Support: https://github.com/luanfernandes/torbox-firefox-extension/issues
@@ -20,7 +20,7 @@ Find TorBox-supported Hoster links on a page, create selected Web Downloads, and
 
 ## Description
 
-TorBox Web Downloads scans link destinations on eligible pages and shows links that match the current TorBox Hoster catalog. Select one link for a quick result in the popup, or create a batch and choose individual files in a dedicated tab.
+Torbox Web Helper scans link destinations on eligible pages and shows links that match the current TorBox Hoster catalog. Select one link for a quick result in the popup, or create a batch and choose individual files in a dedicated tab.
 
 The extension does not start browser downloads. It asks TorBox for a generated HTTPS link only after an explicit Generate action, then opens that link only when the user clicks it.
 
@@ -36,7 +36,7 @@ Automatic discovery runs on top-level HTTP and HTTPS pages after setup. The cont
 
 ### Storage
 
-Local storage keeps the API key, settings, Hoster catalog, ordinary batch recovery state, and seven-day summaries. Private batches and automatic page-count summaries use session storage. Generated links remain only in the open popup or batch-tab memory.
+Local storage keeps the API key, settings, Hoster catalog, ordinary batch recovery state, and seven-day summaries. Private batches and automatic page-count summaries use session storage. A summary includes the top-level hostname but not complete candidate URLs. Generated links remain only in the open popup or batch-tab memory.
 
 ### Alarms
 

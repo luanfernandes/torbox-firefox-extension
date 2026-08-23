@@ -1,6 +1,6 @@
 {
-  "name": "torbox-firefox-extension",
-  "version": "0.1.0",
+  "name": "torbox-web-helper",
+  "version": "0.1.1",
   "private": true,
   "description": "Unofficial Firefox and Zen extension for finding and preparing TorBox-supported Hoster links.",
   "license": "MIT",
@@ -28,6 +28,7 @@
     "lint:extension": "web-ext lint --source-dir dist",
     "smoke:zen": "node scripts/smoke-zen.mjs",
     "package": "pnpm build && web-ext build --source-dir dist --artifacts-dir web-ext-artifacts --overwrite-dest",
+    "package:release": "node scripts/package-release.mjs",
     "verify": "pnpm test && pnpm typecheck && pnpm build && pnpm lint:extension"
   },
   "dependencies": {

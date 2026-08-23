@@ -5,8 +5,8 @@ The public AMO listing is the normal installation channel. GitHub keeps source, 
 ## Repository preparation
 
 - [x] Preserve the GitHub repository's MIT license.
-- [x] Use the permanent extension ID `torbox-web-downloads@luanfernandes.github.io`.
-- [x] Label the extension as unofficial in release-facing names and documentation.
+- [x] Use the owner-approved name `Torbox Web Helper` and permanent ID `torbox-web-helper@luanfernandes.github.io`.
+- [x] Label the project as unofficial in the manifest description, listing, README, and privacy policy.
 - [x] Publish the privacy policy, support policy, security policy, changelog, and contribution guide.
 - [x] Add continuous verification and tag-based release packaging.
 - [x] Prepare AMO listing copy, reviewer notes, and reproducible build instructions.
@@ -20,12 +20,12 @@ The public AMO listing is the normal installation channel. GitHub keeps source, 
 - [ ] Record a complete pass on the latest stable Zen Browser for Windows.
 - [x] Run `pnpm verify` from a clean GitHub Actions checkout with the lockfile frozen.
 - [x] Inspect the tracked tree, package, and source archive for API keys, passwords, source credentials, Mega keys, generated links, account responses, and browser-profile data. Repeat this check after screenshots and manual-test logs exist.
-- [x] Confirm `package.json`, the manifest, changelog, tag, and release title use version `0.1.0`.
+- [ ] Confirm `package.json`, the manifest, changelog, tag, and release title use version `0.1.1`.
 
 ## Owner and AMO work
 
-- [ ] Approve the permanent extension identity and public listing name.
-- [ ] Create or sign into the Mozilla Add-ons developer account and accept the current developer agreement.
+- [x] Approve the permanent extension identity and public listing name.
+- [x] Create or sign into the Mozilla Add-ons developer account and accept the current developer agreement.
 - [ ] Choose a support email for the private AMO listing field.
 - [ ] Create a dedicated, revocable TorBox reviewer account or API key.
 - [ ] Host a stable HTTPS test page with small legal Hoster examples.

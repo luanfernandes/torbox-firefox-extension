@@ -2,6 +2,20 @@
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-08-23
+
+### Changed
+
+- Renamed the extension to Torbox Web Helper and assigned its permanent Firefox ID.
+- Rewrote the privacy policy from the implemented storage, scanning, TorBox API, and retention behavior.
+- Added release packaging that produces matching AMO-upload and reviewer-source ZIP files with SHA-256 checksums.
+- Run seven-day history cleanup at startup and during daily maintenance.
+- Redact URLs and known submitted secrets from stored API error details.
+
+### Distribution status
+
+- The GitHub ZIP is prepared for AMO upload and still requires Mozilla signing before normal installation.
+
 ## [0.1.0] - 2026-08-22
 
 ### Added
@@ -20,3 +34,4 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Normal Firefox and Zen installation requires a Mozilla-signed XPI or the future AMO listing.
 
 [0.1.0]: https://github.com/luanfernandes/torbox-firefox-extension/releases/tag/v0.1.0
+[0.1.1]: https://github.com/luanfernandes/torbox-firefox-extension/releases/tag/v0.1.1

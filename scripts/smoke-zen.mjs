@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
+const extensionId = "torbox-web-helper@luanfernandes.github.io";
 const zenBinary = process.argv.slice(2).find((argument) => argument !== "--") || process.env.TORBOX_ZEN_BINARY;
 if (!zenBinary) {
   throw new Error("Pass the Zen executable path or set TORBOX_ZEN_BINARY.");
@@ -41,7 +42,7 @@ let installed = false;
 try {
   const extensions = JSON.parse(await readFile(join(profile, "extensions.json"), "utf8"));
   installed = Array.isArray(extensions.addons)
-    && extensions.addons.some((addon) => addon.id === "torbox-web-downloads@local" && addon.active !== false);
+    && extensions.addons.some((addon) => addon.id === extensionId && addon.active !== false);
 } catch {
   installed = false;
 }
@@ -56,5 +57,5 @@ if (!installed) {
   process.stderr.write(output || "Zen did not record the extension in the isolated profile.\n");
   process.exitCode = 1;
 } else {
-  process.stdout.write("Zen loaded torbox-web-downloads@local in an isolated headless profile.\n");
+  process.stdout.write(`Zen loaded ${extensionId} in an isolated headless profile.\n`);
 }

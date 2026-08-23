@@ -17,7 +17,7 @@ pnpm verify
 pnpm package
 ```
 
-`pnpm build` bundles TypeScript with esbuild into classic, non-minified scripts in `dist`. It copies the static manifest, HTML, CSS, and icons from `src/static`. `pnpm package` then creates the Firefox ZIP in `web-ext-artifacts`.
+`pnpm build` bundles TypeScript with esbuild into classic, non-minified scripts in `dist`. It copies the static manifest, HTML, CSS, and icons from `src/static`. `pnpm package` then creates the Firefox ZIP in `web-ext-artifacts`. `pnpm package:release` creates the AMO upload ZIP, source archive, and checksums from a clean commit.
 
 The submitted source archive is produced from the release tag with `git archive`. It excludes ignored build output and dependencies because those files are not tracked.
 
@@ -44,6 +44,8 @@ The API key belongs only in private reviewer notes. Revoke it after review.
 ## Data and privacy notes
 
 The extension sends the saved API key, user-selected source URL, optional Hoster password, and TorBox item or file identifiers to `https://api.torbox.app`. It does not transmit all visited URLs or automatic discovery results. Full source links are sent only after batch confirmation.
+
+Observation and uncertain-create reconciliation may read the account's full paged TorBox Web Download list into background memory. The extension filters that response to its own Web Download identifiers before persistence. Automatic summaries store the top-level hostname and counts in session storage but no complete candidate URLs.
 
 The extension contains no analytics, advertising, telemetry, remote scripts, or remotely hosted UI assets. Its broad HTTP and HTTPS access exists because automatic discovery is the single purpose of the extension.
 

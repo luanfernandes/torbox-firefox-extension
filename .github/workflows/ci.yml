@@ -38,7 +38,7 @@ jobs:
       - name: Upload unsigned package
         uses: actions/upload-artifact@v4
         with:
-          name: firefox-unsigned-package
+          name: firefox-amo-upload-package
           path: web-ext-artifacts/*.zip
           if-no-files-found: error
           retention-days: 14

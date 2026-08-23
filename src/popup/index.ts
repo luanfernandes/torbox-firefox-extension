@@ -334,7 +334,7 @@ function render(): void {
     return;
   }
   const title = document.createElement("h1");
-  title.textContent = "TorBox links";
+  title.textContent = "Torbox Web Helper";
   content.append(title);
 
   if (!state.settings.keyValidated) {

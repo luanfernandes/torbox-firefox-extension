@@ -43,20 +43,10 @@ jobs:
           test "$tag_version" = "$manifest_version"
 
       - name: Create release archives
-        shell: bash
-        run: |
-          pnpm package
-          tag_version="${GITHUB_REF_NAME#v}"
-          package_file="$(find web-ext-artifacts -maxdepth 1 -type f -name '*.zip' -print -quit)"
-          test -n "$package_file"
-          mkdir -p release-artifacts
-          cp "$package_file" "release-artifacts/torbox-web-downloads-${tag_version}-firefox-unsigned.zip"
-          git archive --format=zip --prefix="torbox-firefox-extension-${tag_version}/" --output="release-artifacts/torbox-web-downloads-${tag_version}-source.zip" HEAD
-          cd release-artifacts
-          sha256sum *.zip > SHA256SUMS.txt
+        run: pnpm package:release
 
       - name: Create GitHub prerelease
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" release-artifacts/* --prerelease --verify-tag --title "TorBox Web Downloads $GITHUB_REF_NAME developer preview" --notes-file docs/release/github-release-notes.md
+          gh release create "$GITHUB_REF_NAME" release-artifacts/* --prerelease --verify-tag --title "Torbox Web Helper $GITHUB_REF_NAME AMO upload candidate" --notes-file docs/release/github-release-notes.md

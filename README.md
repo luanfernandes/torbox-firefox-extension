@@ -1,6 +1,6 @@
-# TorBox Web Downloads for Firefox and Zen
+# Torbox Web Helper for Firefox and Zen
 
-This unofficial WebExtension finds TorBox-supported Hoster links on ordinary web pages. It creates TorBox Web Downloads after user confirmation. A one-link selection can finish in the popup; larger selections use a dedicated batch tab.
+Torbox Web Helper is an unofficial WebExtension that finds TorBox-supported Hoster links on ordinary web pages. It creates TorBox Web Downloads after user confirmation. A one-link selection can finish in the popup; larger selections use a dedicated batch tab.
 
 The first release targets Firefox and Zen Browser on Windows. It uses Firefox WebExtension APIs. Chromium is not supported yet.
 
@@ -31,9 +31,25 @@ pnpm verify
 
 The unpacked extension is written to `dist`.
 
+## Prepare an AMO upload
+
+Commit the exact release source, then run:
+
+```powershell
+pnpm package:release
+```
+
+The command refuses to package tracked changes that are not committed. It writes these matching files to `release-artifacts`:
+
+- `torbox-web-helper-<version>-firefox-amo-upload.zip`, which is the extension file to upload to AMO;
+- `torbox-web-helper-<version>-source.zip`, which is the reviewer source archive;
+- `SHA256SUMS.txt`.
+
+The AMO upload ZIP is unsigned. Mozilla signs it during submission.
+
 ## Install
 
-The public AMO listing is being prepared. Firefox and Zen require Mozilla to sign an extension before it can remain installed in a normal release build. Files marked `unsigned` in GitHub Releases are reviewer and development packages, not normal-install packages.
+The public AMO listing is being prepared. Firefox and Zen require Mozilla to sign an extension before it can remain installed in a normal release build. Files marked as AMO upload candidates in GitHub Releases are reviewer packages, not normal-install packages.
 
 Until the AMO listing is available, developers can load the extension temporarily:
 

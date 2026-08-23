@@ -64,10 +64,13 @@ function fail(error: string, duplicateSources?: string[]): RuntimeResponse {
   return duplicateSources ? { ok: false, error, duplicateSources } : { ok: false, error };
 }
 
-function safeDetail(error: unknown, token?: string): string {
+function safeDetail(error: unknown, ...secrets: Array<string | undefined>): string {
   const original = error instanceof TorBoxError ? error.detail : error instanceof Error ? error.message : "Unknown error";
-  let result = original.replace(/Bearer\s+\S+/gi, "Bearer [redacted]").replace(/([?&]token=)[^&\s]+/gi, "$1[redacted]");
-  if (token) result = result.replaceAll(token, "[redacted]");
+  let result = original
+    .replace(/Bearer\s+\S+/gi, "Bearer [redacted]")
+    .replace(/([?&]token=)[^&\s]+/gi, "$1[redacted]")
+    .replace(/https?:\/\/[^\s"'<>]+/gi, "[URL redacted]");
+  for (const secret of secrets) if (secret) result = result.replaceAll(secret, "[redacted]");
   return result.slice(0, 500);
 }
 
@@ -411,7 +414,7 @@ async function processBatch(batchId: string): Promise<void> {
             await saveBatch(await notifyBatch(batch));
             break;
           }
-          batch = markCreateFailed(batch, item.id, safeDetail(error, settings.apiKey), Date.now());
+          batch = markCreateFailed(batch, item.id, safeDetail(error, settings.apiKey, item.rawSource, item.password), Date.now());
           if (error.status === 401 || error.status === 403) {
             batch.attentionReason = "The TorBox API key is no longer valid.";
             await saveBatch(await notifyBatch(batch));
@@ -624,7 +627,10 @@ browser.runtime.onMessage.addListener((message: RuntimeRequest, sender) => handl
 
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === CATALOG_ALARM) {
-    void getSettings().then((settings) => settings.apiKey ? refreshCatalog(settings.apiKey, false) : null);
+    void Promise.all([
+      getSettings().then((settings) => settings.apiKey ? refreshCatalog(settings.apiKey, false) : null),
+      cleanupHistory(),
+    ]);
   }
   if (alarm.name === BATCH_ALARM) void observeAllBatches().then(scheduleBatchAlarm);
 });
@@ -659,6 +665,7 @@ browser.runtime.onInstalled.addListener((details) => {
 
 void (async () => {
   await browser.alarms.create(CATALOG_ALARM, { periodInMinutes: 1_440 });
+  await cleanupHistory();
   const settings = await getSettings();
   if (settings.apiKey && settings.keyValidated) {
     const catalog = await getCatalog();

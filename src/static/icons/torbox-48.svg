@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="TorBox">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Torbox Web Helper">
   <rect width="48" height="48" rx="11" fill="#2563eb"/>
   <path d="M11 13h26v7H28v17h-8V20h-9z" fill="white"/>
   <path d="M30 24h7v13h-7z" fill="#9bc0ff"/>
 </svg>
-
