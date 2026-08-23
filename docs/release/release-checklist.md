@@ -18,8 +18,8 @@ The public AMO listing is the normal installation channel. GitHub keeps source, 
 - [ ] Complete every authenticated TorBox check in `docs/implementation-plan.md` with a dedicated account and small legal files.
 - [ ] Record a complete pass of `docs/manual-smoke-test.md` on the latest stable Firefox for Windows.
 - [ ] Record a complete pass on the latest stable Zen Browser for Windows.
-- [ ] Run `pnpm verify` from a clean checkout with the lockfile frozen.
-- [ ] Inspect the tracked tree, package, source archive, screenshots, and logs for API keys, passwords, source credentials, Mega keys, generated links, account responses, and browser-profile data.
+- [x] Run `pnpm verify` from a clean GitHub Actions checkout with the lockfile frozen.
+- [x] Inspect the tracked tree, package, and source archive for API keys, passwords, source credentials, Mega keys, generated links, account responses, and browser-profile data. Repeat this check after screenshots and manual-test logs exist.
 - [ ] Confirm `package.json`, the manifest, changelog, tag, and release title use the same version.
 
 ## Owner and AMO work

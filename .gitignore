@@ -2,6 +2,7 @@ node_modules/
 .pnpm-store/
 dist/
 web-ext-artifacts/
+release-artifacts/
 coverage/
 .tmp/
 *.log
