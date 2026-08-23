@@ -10,7 +10,7 @@ The public AMO listing is the normal installation channel. GitHub keeps source, 
 - [x] Publish the privacy policy, support policy, security policy, changelog, and contribution guide.
 - [x] Add continuous verification and tag-based release packaging.
 - [x] Prepare AMO listing copy, reviewer notes, and reproducible build instructions.
-- [ ] Enable GitHub private vulnerability reporting in repository Security settings.
+- [x] Enable GitHub private vulnerability reporting, secret scanning, push protection, dependency alerts, and automated security fixes.
 - [ ] Confirm the public name and artwork do not violate TorBox branding rights.
 
 ## Release verification
@@ -20,7 +20,7 @@ The public AMO listing is the normal installation channel. GitHub keeps source, 
 - [ ] Record a complete pass on the latest stable Zen Browser for Windows.
 - [x] Run `pnpm verify` from a clean GitHub Actions checkout with the lockfile frozen.
 - [x] Inspect the tracked tree, package, and source archive for API keys, passwords, source credentials, Mega keys, generated links, account responses, and browser-profile data. Repeat this check after screenshots and manual-test logs exist.
-- [ ] Confirm `package.json`, the manifest, changelog, tag, and release title use the same version.
+- [x] Confirm `package.json`, the manifest, changelog, tag, and release title use version `0.1.0`.
 
 ## Owner and AMO work
 
