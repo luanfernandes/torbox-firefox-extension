@@ -8,7 +8,8 @@ Status: v1 implemented; authenticated TorBox smoke checks remain
 - Automatic top-level anchor and area discovery after validated setup.
 - Daily Hoster catalog refresh, cached unverified fallback, domain-boundary and IDNA matching, regex-equivalence guard, current-status filtering, Hoster-only scope, and NSFW opt-in.
 - Global pause, exact-hostname exclusions, private-window session behavior, 100-candidate cap, badge summaries, and on-demand complete candidate retrieval.
-- Popup multi-selection, Select all, Unselect all, per-source passwords, duplicate confirmation, 60-source cap, and automatic batch-tab opening.
+- Popup multi-selection, fixed Lucide action bar, per-source passwords, duplicate confirmation, 60-source cap, one-source quick-download progress and generated-link icon, and automatic batch-tab opening for larger selections.
+- Mega fragment preservation through discovery, deduplication, recovery hashing, and submission while ordinary navigation fragments remain stripped.
 - Local ordinary batches, session-only private batches, sequential create queue, password cleanup, redacted history, rate-limit pause, ambiguous-create state, MD5 reconciliation, 24-hour recovery, seven-day history, and optional notifications.
 - Web Download observation, reported-file selection, default selection for sets up to 100, 100-link action cap, four-request concurrency, memory-only HTTPS links, and user-click navigation.
 - Settings, privacy notes, build scripts, automated tests, extension lint, and a repeatable isolated Zen smoke script.

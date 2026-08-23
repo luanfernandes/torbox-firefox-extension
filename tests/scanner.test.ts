@@ -29,4 +29,19 @@ describe("automatic page discovery", () => {
     }]);
     expect(result.truncated).toBe(true);
   });
+
+  test("keeps distinct Mega files whose identities are in their fragments", () => {
+    document.body.innerHTML = `
+      <a href="https://mega.nz/file/handle#first-key">first</a>
+      <a href="https://mega.nz/file/handle#second-key">second</a>
+    `;
+    const matcher = buildMatcher([
+      { id: 9, name: "Mega", type: "hoster", domains: ["mega.nz"], status: true, nsfw: false },
+    ], { includeNsfw: false });
+
+    expect(scanDocument(document, matcher).candidates.map((candidate) => candidate.url)).toEqual([
+      "https://mega.nz/file/handle#first-key",
+      "https://mega.nz/file/handle#second-key",
+    ]);
+  });
 });

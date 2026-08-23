@@ -18,6 +18,7 @@ Use the latest stable Zen Browser on Windows, a user-owned TorBox account, and s
 4. Test Pause everywhere, the exact-hostname exclusion, and NSFW opt-in.
 5. Confirm that a large fixture shows truncation and does not freeze Zen.
 6. Grant private-window access, create a private candidate, and confirm that private state disappears after the private session ends.
+7. Scan controlled legacy and current Mega links. Confirm that the popup and create request preserve their complete fragments and that ordinary page anchors still deduplicate without fragments.
 
 ## Batch creation and recovery
 
@@ -30,12 +31,15 @@ Use the latest stable Zen Browser on Windows, a user-owned TorBox account, and s
 
 ## Link generation
 
-1. Wait until TorBox reports files.
-2. Confirm that an item with at most 100 files selects them all and provides Unselect all.
-3. Generate selected files. Confirm at most four requests run together and no action accepts more than 100 files.
-4. Confirm that every result is HTTPS and opens a new tab only after a click.
-5. Reload the batch tab and confirm that generated links disappear.
-6. Search the extension storage and logs. Confirm that generated links and API keys are absent from batch records and diagnostics.
+1. Select one source that reports one file. Confirm that no batch tab opens, the popup explains that TorBox is processing it, and a Download icon appears when ready.
+2. Close and reopen the popup during processing. Confirm that the current quick batch returns without persisting a generated URL.
+3. Test a source that reports several files. Confirm that the popup offers the batch tab instead of choosing a file.
+4. Wait until TorBox reports files in a multi-source batch.
+5. Confirm that an item with at most 100 files selects them all and provides Unselect all.
+6. Generate selected files. Confirm at most four requests run together and no action accepts more than 100 files.
+7. Confirm that every result is HTTPS and opens a new tab only after a click.
+8. Reload the popup or batch tab and confirm that generated links disappear.
+9. Search the extension storage and logs. Confirm that generated links and API keys are absent from batch records and diagnostics.
 
 ## Record
 

@@ -23,6 +23,24 @@ describe("Hoster catalog matching", () => {
     });
   });
 
+  test("preserves the fragment that identifies and decrypts a Mega file", () => {
+    const matcher = buildMatcher([
+      {
+        id: 9,
+        name: "Mega",
+        type: "hoster",
+        domains: ["mega.nz", "mega.io", "mega.co.nz"],
+        status: true,
+        nsfw: false,
+      },
+    ], { includeNsfw: false });
+
+    expect(findCandidate(
+      "https://mega.co.nz/#!CmZ2GDIS!a7XB7-YT831zM8e5SrCbwBfh_8wF2INWjqrEFRk_rFU",
+      matcher,
+    )?.url).toBe("https://mega.co.nz/#!CmZ2GDIS!a7XB7-YT831zM8e5SrCbwBfh_8wF2INWjqrEFRk_rFU");
+  });
+
   test("excludes lookalike, unavailable, Stream, and opted-out NSFW entries", () => {
     const matcher = buildMatcher([
       { id: 1, name: "Offline", type: "hoster", domains: ["offline.test"], status: false, nsfw: false },

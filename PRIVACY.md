@@ -15,7 +15,7 @@ The user can pause discovery everywhere or exclude an exact hostname.
 The extension sends the following data to `https://api.torbox.app`:
 
 - the API key for authenticated requests;
-- a selected source URL, including any embedded URL credentials;
+- a selected source URL, including any embedded URL credentials and any required Mega fragment;
 - an optional Hoster password supplied for that selected source;
 - TorBox Web Download and file identifiers needed to observe an item or generate a link.
 
@@ -40,7 +40,7 @@ The extension deletes a Hoster password after its create outcome, cancellation, 
 
 `storage.session` contains candidate-count summaries and private-batch state. Zen clears it when the browser session ends.
 
-Generated links remain only in the open batch tab's memory. Reloading or closing that tab removes them.
+Generated links remain only in the requesting popup or batch tab's memory. Reloading or closing that view removes them. Mega fragments can contain decryption keys; unresolved Mega source URLs follow the same temporary batch-storage lifecycle as other raw sources.
 
 ## Private windows
 
@@ -49,4 +49,3 @@ Zen disables private-window access until the user grants it. Private batches use
 ## Remote deletion
 
 Dismissing local history deletes local batch records only. V1 never deletes a Web Download from the TorBox account.
-

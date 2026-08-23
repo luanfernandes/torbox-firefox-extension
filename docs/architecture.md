@@ -18,7 +18,7 @@ Read `product-spec.md`, `grilling-log.md`, and `research/torbox-api.md` before c
 | Component | Owns |
 | --- | --- |
 | Content scanner | Public matcher, automatic top-level discovery, candidate cap, mutation debounce, complete candidate memory, count summaries |
-| Popup | Current-page candidate request, selection, duplicate confirmation, per-source password input, batch confirmation, pause and hostname exclusion |
+| Popup | Current-page candidate request, selection, duplicate confirmation, per-source password input, fixed Lucide action bar, one-file quick-download progress and memory-only generated link, pause and hostname exclusion |
 | Batch tab | Durable progress view, file selection, explicit link-generation sessions, in-memory generated URLs |
 | Settings | API-key validation and removal, global pause, exact-hostname exclusions, NSFW opt-in, optional notification permission |
 | Background coordinator | Secrets, catalog, badges, count summaries, private-context checks, batches, alarms, notifications, TorBox calls |
@@ -54,13 +54,14 @@ Delete an ordinary password after known create resolution, cancellation, or time
 
 - Per-document count summary: tab ID, scanner instance ID, Hoster counts, catalog version, truncation, and scan time.
 - Private batch records and unresolved private passwords.
+- A page-tab-to-batch mapping for the most recent one-source quick download. It contains no generated URL.
 
 Session storage contains no automatically captured full candidates. Private data never appears in an ordinary-window query, notification, or durable record.
 
 ### Page and view memory
 
 - The content scanner owns complete current candidates until the popup asks for them.
-- The batch tab owns generated URLs until reload or closure.
+- The popup or batch tab that requested a generated URL owns it until that view reloads or closes.
 
 ## Catalog lifecycle
 
@@ -80,7 +81,7 @@ Normalize domains through the URL parser, deduplicate them, and use exact or dot
 
 The scanner creates a random document-instance ID and requests a matcher. The background enables it only when the key is valid, scanning is globally active, and the exact page hostname is not excluded.
 
-The scanner resolves `a[href]` and `area[href]`, keeps HTTP and HTTPS URLs, strips fragments, and deduplicates the serialized results. Embedded URL credentials and queries remain. V1 stops at 100 candidates and discloses truncation. Raise that cap only after a Zen performance measurement.
+The scanner resolves `a[href]` and `area[href]`, keeps HTTP and HTTPS URLs, and deduplicates serialized results. It strips ordinary navigation fragments but preserves complete fragments for `mega.nz`, `mega.io`, and `mega.co.nz`, where the fragment carries file identity or decryption data. Embedded URL credentials and queries remain. V1 stops at 100 candidates and discloses truncation. Raise that cap only after a Zen performance measurement.
 
 The scanner sends only counts, service IDs, catalog version, truncation, and its instance ID automatically. The background validates that summary, stores it in `storage.session`, and updates the badge. When the popup requests candidates, the background forwards a message to the current tab. The scanner returns the complete in-memory candidates, and the background reparses and rematches them before returning them to the popup.
 
@@ -124,7 +125,9 @@ The documented file model has no infection field. Persist only reported file met
 
 The batch tab selects reported files and sends one `GENERATE_LINK` command per file, with at most four commands in flight and 100 files per user action. The background calls `/v1/api/webdl/requestdl` with `redirect=false`, validates an HTTPS result, and returns it to that requesting tab only.
 
-The batch tab renders `target="_blank"` links with `rel="noreferrer noopener"`. It stores results in document memory. The background does not persist or notify with generated URLs.
+For one selected source, the background records the batch against the originating page tab and does not open the batch tab. The popup polls the durable batch while open. When TorBox reports exactly one file, the original Create action authorizes one `GENERATE_LINK` call. The popup renders a Download icon. If TorBox reports several files or the batch needs attention, the popup offers an External Link icon to the full batch tab.
+
+The popup and batch tab render `target="_blank"` links with `rel="noreferrer noopener"`. Each stores results in its own document memory. The background does not persist or notify with generated URLs.
 
 ## Notifications
 

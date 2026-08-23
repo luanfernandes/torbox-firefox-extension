@@ -14,7 +14,10 @@ V1 is implemented and passes automated verification plus isolated Zen 154 instal
 - Treat a user batch as an extension queue. The TorBox WebDL API currently creates one link per request.
 - Use Web Download endpoints under `/v1/api/webdl`. Torrent IDs and `/torrents/requestdl` are outside this product flow.
 - Generate requested file links only after an explicit user action. Present them as clickable links and never start a local download automatically.
-- Keep generated links in batch-tab memory. Store the TorBox API key and unresolved ordinary-batch passwords locally, never in synced storage. Delete each password when its create outcome becomes known, the user cancels it, or the 24-hour window ends.
+- Preserve fragments for Mega sources throughout matching and submission. Strip ordinary navigation fragments from other Hosters.
+- Keep one-source work in the popup when TorBox reports one file. Use the dedicated batch tab for larger selections and multi-file choice.
+- Use the best-fitting Lucide icon for every owner-requested icon control. Bundle icons locally and include accessible labels and hover tooltips.
+- Keep generated links in the requesting popup or batch-tab memory. Store the TorBox API key and unresolved ordinary-batch passwords locally, never in synced storage. Delete each password when its create outcome becomes known, the user cancels it, or the 24-hour window ends.
 - Refresh the hoster catalog every 24 hours and revalidate selected hosters immediately before creating a batch.
 - Make the smallest change that meets the current acceptance criteria. State uncertain assumptions before implementation and verify each phase before moving on.
 
@@ -25,6 +28,7 @@ V1 is implemented and passes automated verification plus isolated Zen 154 instal
 - **Delivery plan:** Read `docs/implementation-plan.md` before starting implementation, adding dependencies, planning tests, or packaging a release.
 - **Domain language:** Read `CONTEXT.md` before naming product concepts, models, messages, tests, or issues.
 - **TorBox API contract:** Read `docs/research/torbox-api.md` before implementing or reviewing a TorBox request, response, rate limit, or batch assumption. Recheck the live official contract when that note is stale.
+- **Mega links:** Read `docs/research/mega-links.md` before changing fragment normalization, Mega matching, source hashing, persistence, or submission.
 - **Grilling:** Read `docs/grilling-log.md` before resuming the design interview. Continue at Q45 and preserve Q1-Q44 unless the owner explicitly revises one.
 - **Issue tracker:** Read `docs/agents/issue-tracker.md` when creating, reading, updating, or closing GitHub issues.
 - **Triage:** Read `docs/agents/triage-labels.md` when applying or interpreting triage labels.

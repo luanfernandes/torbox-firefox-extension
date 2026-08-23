@@ -1,6 +1,6 @@
 # TorBox Web Downloads for Zen
 
-This personal WebExtension finds TorBox-supported Hoster links on ordinary web pages. It creates TorBox Web Downloads in a user-confirmed batch and shows individual generated links only after another user action.
+This personal WebExtension finds TorBox-supported Hoster links on ordinary web pages. It creates TorBox Web Downloads after user confirmation. A one-link selection can finish in the popup; larger selections use a dedicated batch tab.
 
 V1 targets the latest stable Zen Browser on Windows. It uses Firefox WebExtension APIs and does not promise Chromium or other operating-system support yet.
 
@@ -11,6 +11,7 @@ V1 targets the latest stable Zen Browser on Windows. It uses Firefox WebExtensio
 - Shows up to 100 distinct Hoster candidates from the current page. The popup discloses truncation. A later Zen benchmark may justify raising the cap.
 - Supports exact-hostname exclusions, a global pause, optional NSFW Hosters, and private-window use after Zen grants access.
 - Creates 1 to 60 Web Downloads sequentially and preserves partial results.
+- Keeps a one-source download in the popup when TorBox reports one file, then shows a clickable Download icon when ready.
 - Recovers ordinary batches for 24 hours and keeps terminal local history for seven days.
 - Lets the user select reported files and generate at most 100 HTTPS links per action.
 - Opens a generated link only after the user clicks it.
@@ -56,7 +57,7 @@ The headless smoke test creates an isolated temporary profile, checks that Zen r
 
 Settings explains that Zen extension storage is local but is not an operating-system credential vault. Saving a key sends it to TorBox in an authenticated Hoster request. Discovery begins only after that request succeeds.
 
-The popup displays the full source URL during selection, including embedded URL credentials. Confirmed ordinary batches may store unresolved source URLs and Hoster passwords locally. The extension deletes each password after the create outcome, cancellation, or 24-hour cutoff. Resolved history keeps the source hostname and path, without credentials, query, or fragment.
+The popup displays the full source URL during selection, including embedded URL credentials and required Mega fragments. Confirmed ordinary batches may store unresolved source URLs and Hoster passwords locally. A Mega fragment can contain its decryption key. The extension deletes each password and replaces the raw URL after the create outcome, cancellation, or 24-hour cutoff. Resolved history keeps the source hostname and path, without credentials, query, or fragment.
 
 See [PRIVACY.md](PRIVACY.md) and [docs/grilling-log.md](docs/grilling-log.md) for the full data and product decisions.
 

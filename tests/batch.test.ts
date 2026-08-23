@@ -1,9 +1,11 @@
 import { describe, expect, test } from "vitest";
 
 import {
+  applyWebDownload,
   createBatch,
   findUniqueReconciliation,
   markCreateSucceeded,
+  sourceMd5,
   timeoutBatch,
 } from "../src/domain/batch";
 
@@ -44,6 +46,42 @@ describe("Web Download batch state", () => {
 
     expect(updated.items[0]?.state).toBe("timed_out");
     expect(updated.items[0]).not.toHaveProperty("password");
+  });
+
+  test("submits a Mega source with its file handle and decryption key intact", () => {
+    const source = "https://mega.co.nz/#!fileHandle!decryptionKey";
+    const batch = createBatch({
+      id: "batch-mega",
+      createdAt: 1_000,
+      private: false,
+      selections: [{ url: source, hosterId: 9, hosterName: "Mega" }],
+    });
+
+    expect(batch.items[0]?.rawSource).toBe(source);
+    expect(batch.items[0]?.sourceHash).toBe(sourceMd5(source));
+  });
+
+  test("uses TorBox's short file name instead of repeating its full path", () => {
+    const created = createBatch({
+      id: "batch-file-name",
+      createdAt: 1_000,
+      private: false,
+      selections: [{ url: "https://files.test/item", hosterId: 7, hosterName: "Files" }],
+    });
+    const processing = markCreateSucceeded(created, "batch-file-name:1", "web-1", 2_000);
+
+    const ready = applyWebDownload(processing, {
+      id: "web-1",
+      name: "Download",
+      files: [{
+        id: "file-1",
+        name: "Path.of.Idle.Old.Gods.Rising.Build.zip/Path.of.Idle.Old.Gods.Rising.Build.zip",
+        shortName: "Path.of.Idle.Old.Gods.Rising.Build.zip",
+        size: 10,
+      }],
+    }, 3_000);
+
+    expect(ready.items[0]?.files[0]?.name).toBe("Path.of.Idle.Old.Gods.Rising.Build.zip");
   });
 
   test("reconciles only one hash match inside the creation window", () => {

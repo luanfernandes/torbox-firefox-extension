@@ -60,6 +60,7 @@ export interface PopupState {
   verified: boolean;
   truncated: boolean;
   catalogFetchedAt?: number;
+  quickBatch?: BatchRecord;
 }
 
 export type RuntimeRequest =
@@ -76,16 +77,15 @@ export type RuntimeRequest =
   | { type: "SET_HOST_EXCLUDED"; hostname: string; excluded: boolean }
   | { type: "SET_NSFW"; enabled: boolean }
   | { type: "SET_NOTIFICATIONS"; enabled: boolean }
-  | { type: "CREATE_BATCH"; selections: BatchSelection[]; private: boolean; windowId?: number; allowDuplicates: boolean }
+  | { type: "CREATE_BATCH"; selections: BatchSelection[]; private: boolean; windowId?: number; allowDuplicates: boolean; openBatchTab?: boolean; sourceTabId?: number }
   | { type: "GET_BATCH"; batchId: string }
-  | { type: "REFRESH_BATCH"; batchId: string }
+  | { type: "REFRESH_BATCH"; batchId: string; sourceTabId?: number }
   | { type: "RESUME_BATCH"; batchId: string }
   | { type: "CANCEL_ITEM"; batchId: string; itemId: string }
   | { type: "RETRY_UNKNOWN"; batchId: string; itemId: string }
   | { type: "DISMISS_BATCH"; batchId: string }
-  | { type: "GENERATE_LINK"; batchId: string; itemId: string; fileId: string };
+  | { type: "GENERATE_LINK"; batchId: string; itemId: string; fileId: string; sourceTabId?: number };
 
 export type RuntimeResponse =
   | { ok: true; settings?: PublicSettings; scannerConfig?: ScannerConfig; popupState?: PopupState; batch?: BatchRecord; batchId?: string; generatedUrl?: string }
   | { ok: false; error: string; duplicateSources?: string[] };
-

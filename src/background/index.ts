@@ -28,15 +28,19 @@ import type {
 import { TorBoxClient, TorBoxError, type WebDownloadRecord } from "../torbox/client";
 import {
   deleteBatch,
+  deleteQuickBatch,
+  deleteQuickBatchReferences,
   deleteSummary,
   getBatch,
   getCatalog,
+  getQuickBatchId,
   getSettings,
   getSummary,
   listBatches,
   publicSettings,
   saveBatch,
   saveCatalog,
+  saveQuickBatch,
   saveSettings,
   saveSummary,
 } from "./storage";
@@ -169,11 +173,12 @@ async function publishSummary(request: Extract<RuntimeRequest, { type: "PUBLISH_
 }
 
 async function popupState(tabId: number): Promise<RuntimeResponse> {
-  const [tab, settings, catalog, summary] = await Promise.all([
+  const [tab, settings, catalog, summary, quickBatchId] = await Promise.all([
     browser.tabs.get(tabId),
     getSettings(),
     getCatalog(),
     getSummary(tabId),
+    getQuickBatchId(tabId),
   ]);
   const pageUrl = tab.url ? normalizeSourceUrl(tab.url) : null;
   let candidates: CandidateLink[] = [];
@@ -209,6 +214,11 @@ async function popupState(tabId: number): Promise<RuntimeResponse> {
   };
   if (tab.windowId !== undefined) state.windowId = tab.windowId;
   if (catalog) state.catalogFetchedAt = catalog.fetchedAt;
+  if (quickBatchId) {
+    const quickBatch = await getBatch(quickBatchId);
+    if (quickBatch) state.quickBatch = quickBatch;
+    else await deleteQuickBatch(tabId);
+  }
   return ok({ popupState: state });
 }
 
@@ -455,6 +465,18 @@ async function createNewBatch(request: Extract<RuntimeRequest, { type: "CREATE_B
   const settings = await getSettings();
   if (!settings.apiKey || !settings.keyValidated) return fail("Save a valid TorBox API key first.");
   if (request.selections.length < 1 || request.selections.length > 60) return fail("Select between 1 and 60 links.");
+  const quickMode = request.openBatchTab === false;
+  if (quickMode && (request.selections.length !== 1 || request.sourceTabId === undefined)) {
+    return fail("Quick download requires one source and its page tab.");
+  }
+  if (quickMode) {
+    try {
+      const sourceTab = await browser.tabs.get(request.sourceTabId!);
+      if (Boolean(sourceTab.incognito) !== request.private) return fail("The source tab privacy context changed.");
+    } catch {
+      return fail("The source tab is no longer available.");
+    }
+  }
 
   let catalog: CatalogRecord;
   try {
@@ -485,18 +507,40 @@ async function createNewBatch(request: Extract<RuntimeRequest, { type: "CREATE_B
 
   const batch = createBatch({ id: crypto.randomUUID(), createdAt: Date.now(), private: request.private, selections: validated });
   await saveBatch(batch);
-  const tabOptions = request.windowId === undefined
-    ? { url: browser.runtime.getURL(`batch.html#${encodeURIComponent(batch.id)}`) }
-    : { url: browser.runtime.getURL(`batch.html#${encodeURIComponent(batch.id)}`), windowId: request.windowId };
-  await browser.tabs.create(tabOptions);
+  if (quickMode) {
+    await saveQuickBatch(request.sourceTabId!, batch.id);
+  } else {
+    const tabOptions = request.windowId === undefined
+      ? { url: browser.runtime.getURL(`batch.html#${encodeURIComponent(batch.id)}`) }
+      : { url: browser.runtime.getURL(`batch.html#${encodeURIComponent(batch.id)}`), windowId: request.windowId };
+    await browser.tabs.create(tabOptions);
+  }
   enqueueBatch(batch.id);
-  return ok({ batchId: batch.id });
+  return ok({ batchId: batch.id, batch });
 }
 
-async function batchResponse(batchId: string, sender: browser.runtime.MessageSender): Promise<RuntimeResponse> {
+async function canAccessPrivateBatch(
+  batch: BatchRecord,
+  sender: browser.runtime.MessageSender,
+  sourceTabId?: number,
+): Promise<boolean> {
+  if (!batch.private || sender.tab?.incognito) return true;
+  if (sourceTabId === undefined || await getQuickBatchId(sourceTabId) !== batch.id) return false;
+  try {
+    return Boolean((await browser.tabs.get(sourceTabId)).incognito);
+  } catch {
+    return false;
+  }
+}
+
+async function batchResponse(
+  batchId: string,
+  sender: browser.runtime.MessageSender,
+  sourceTabId?: number,
+): Promise<RuntimeResponse> {
   const batch = await getBatch(batchId);
   if (!batch) return fail("Batch not found.");
-  if (batch.private && !sender.tab?.incognito) return fail("Private batches are available only in private windows.");
+  if (!await canAccessPrivateBatch(batch, sender, sourceTabId)) return fail("Private batches are available only in private windows.");
   return ok({ batch });
 }
 
@@ -522,7 +566,7 @@ async function handleMessage(message: RuntimeRequest, sender: browser.runtime.Me
     case "SET_NOTIFICATIONS": return updateSettings((settings) => ({ ...settings, notificationsEnabled: message.enabled }));
     case "CREATE_BATCH": return createNewBatch(message);
     case "GET_BATCH": return batchResponse(message.batchId, sender);
-    case "REFRESH_BATCH": await observeBatch(message.batchId); return batchResponse(message.batchId, sender);
+    case "REFRESH_BATCH": await observeBatch(message.batchId); return batchResponse(message.batchId, sender, message.sourceTabId);
     case "RESUME_BATCH": {
       const batch = await getBatch(message.batchId);
       if (!batch) return fail("Batch not found.");
@@ -553,11 +597,14 @@ async function handleMessage(message: RuntimeRequest, sender: browser.runtime.Me
       enqueueBatch(updated.id);
       return ok({ batch: updated });
     }
-    case "DISMISS_BATCH": await deleteBatch(message.batchId); return ok();
+    case "DISMISS_BATCH":
+      await deleteBatch(message.batchId);
+      await deleteQuickBatchReferences(message.batchId);
+      return ok();
     case "GENERATE_LINK": {
       const batch = await getBatch(message.batchId);
       if (!batch) return fail("Batch not found.");
-      if (batch.private && !sender.tab?.incognito) return fail("Private batch access denied.");
+      if (!await canAccessPrivateBatch(batch, sender, message.sourceTabId)) return fail("Private batch access denied.");
       const item = batch.items.find((candidate) => candidate.id === message.itemId && candidate.state === "ready_to_generate");
       if (!item?.webdownloadId || !item.files.some((file) => file.id === message.fileId)) return fail("File is not ready for link generation.");
       const settings = await getSettings();
@@ -584,6 +631,7 @@ browser.alarms.onAlarm.addListener((alarm) => {
 
 browser.tabs.onRemoved.addListener((tabId) => {
   void deleteSummary(tabId);
+  void deleteQuickBatch(tabId);
 });
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo) => {

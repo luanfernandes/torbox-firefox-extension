@@ -2,7 +2,7 @@ import { md5 } from "@noble/hashes/legacy.js";
 import { bytesToHex } from "@noble/hashes/utils.js";
 
 import type { WebDownloadFile, WebDownloadRecord } from "../torbox/client";
-import { normalizeSourceUrl } from "./catalog";
+import { normalizeCandidateSourceUrl } from "./catalog";
 
 export type BatchItemState =
   | "queued"
@@ -65,7 +65,7 @@ export interface CreateBatchInput {
 }
 
 function redactedSource(source: string): string {
-  const url = normalizeSourceUrl(source);
+  const url = normalizeCandidateSourceUrl(source);
   if (!url) return "Invalid source";
   return `${url.hostname}${url.pathname}`;
 }
@@ -85,7 +85,7 @@ export function createBatch(input: CreateBatchInput): BatchRecord {
 
   const seen = new Set<string>();
   const items = input.selections.map((selection, index): BatchItem => {
-    const normalized = normalizeSourceUrl(selection.url);
+    const normalized = normalizeCandidateSourceUrl(selection.url);
     if (!normalized) throw new Error("A batch source must be HTTP or HTTPS");
     const rawSource = normalized.href;
     if (seen.has(rawSource)) throw new Error("A batch cannot contain duplicate sources");
@@ -202,7 +202,7 @@ export function timeoutBatch(batch: BatchRecord, now: number): BatchRecord {
 }
 
 function toBatchFile(file: WebDownloadFile): BatchFile {
-  const result: BatchFile = { id: file.id, name: file.name, size: file.size };
+  const result: BatchFile = { id: file.id, name: file.shortName?.trim() || file.name, size: file.size };
   if (file.mimetype) result.mimetype = file.mimetype;
   return result;
 }

@@ -16,7 +16,8 @@
     "verify": "pnpm test && pnpm typecheck && pnpm build && pnpm lint:extension"
   },
   "dependencies": {
-    "@noble/hashes": "2.3.0"
+    "@noble/hashes": "2.3.0",
+    "lucide": "1.33.0"
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "143.0.0",

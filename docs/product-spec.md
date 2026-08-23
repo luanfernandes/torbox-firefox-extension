@@ -4,7 +4,7 @@ Status: v1 implementation authorized on 2026-08-22
 
 ## Product outcome
 
-The extension scans eligible pages for links handled by TorBox Web Downloads. The user opens the toolbar popup, selects up to 60 links, confirms a batch, watches it in a dedicated tab, and chooses which reported files need generated links.
+The extension scans eligible pages for links handled by TorBox Web Downloads. The user opens the toolbar popup and selects up to 60 links. A one-link selection stays in the popup through processing and link generation when TorBox reports exactly one file. Larger selections open a dedicated batch tab.
 
 The extension never starts a local download. Zen follows a generated link only after the user clicks it.
 
@@ -28,11 +28,12 @@ The extension never starts a local download. Zen follows a generated link only a
 3. Eligible pages begin automatic discovery. The badge shows the available-candidate count for the current document.
 4. The popup asks the page scanner for its current complete candidates, groups them by Hoster, and allows multi-selection.
 5. The user supplies an optional password per selected source and confirms a batch of 1 to 60 links.
-6. The background opens a dedicated batch tab, performs one authenticated Hoster preflight, and creates one TorBox Web Download per source sequentially.
-7. Accepted items remain visible while TorBox processes them. Ordinary batches recover after event-page suspension or browser restart for 24 hours. Private batches last only for the current browser session.
-8. When TorBox reports files, the user selects files. Items with no more than 100 files start with all files selected and include Select all and Unselect all.
-9. Generate selected or Generate all ready requests at most 100 file links per action.
-10. The batch tab renders each generated HTTPS URL as a filename link that opens a new tab. Reloading or closing the batch tab destroys every generated URL.
+6. For one selected source, the popup remains open, reports TorBox progress, and generates the sole reported file link when ready. If the item contains several files, the popup offers the dedicated batch tab instead of choosing one.
+7. For two or more sources, the background opens the dedicated batch tab. All batches perform one authenticated Hoster preflight and create one TorBox Web Download per source sequentially.
+8. Accepted items remain visible while TorBox processes them. Ordinary batches recover after event-page suspension or browser restart for 24 hours. Private batches last only for the current browser session.
+9. In the batch tab, the user selects files. Items with no more than 100 files start with all files selected and include Select all and Unselect all.
+10. Generate selected or Generate all ready requests at most 100 file links per action.
+11. The popup renders a quick result as a Download icon. The batch tab renders each generated HTTPS URL as a filename link. Both open a new tab only after a click, and both forget generated URLs when their extension view closes or reloads.
 
 ## Catalog and discovery
 
@@ -45,7 +46,7 @@ The extension never starts a local download. Zen follows a generated link only a
 - Match exact domains and subdomains at DNS-label boundaries. Normalize internationalized domains to their ASCII URL-hostname form and deduplicate catalog domains.
 - Do not execute TorBox-provided regular expressions. At refresh, reject an entry whose regex no longer describes the same domain set until the contract is reviewed.
 - Resolve relative link destinations against `document.baseURI`.
-- Keep HTTP and HTTPS sources. Accept embedded URL credentials. Strip fragments before deduplication and submission. Preserve queries.
+- Keep HTTP and HTTPS sources. Accept embedded URL credentials and preserve queries. Strip ordinary navigation fragments before deduplication and submission. Preserve complete fragments for Mega domains because Mega stores the public handle or decryption key there.
 - Keep complete candidates inside the isolated content script until the popup requests them. Automatically publish counts, service identifiers, catalog version, and truncation only.
 - Store count summaries in `storage.session`. Replace them on navigation and remove them on tab close or browser exit.
 - Debounce added, removed, and changed link destinations. Ignore unrelated mutations.
@@ -90,24 +91,26 @@ The extension never starts a local download. Zen follows a generated link only a
 
 ## Explicit link generation
 
-- Do not call `requestdl` before a Generate action.
+- Do not call `requestdl` before a Generate action. Confirming a one-source quick download is an explicit request to generate its link after TorBox reports exactly one file.
+- If a quick item reports several files, do not generate any link automatically. Offer the dedicated batch tab for file selection.
 - Let the user select individual reported files. Select all initially when an item has no more than 100 files.
 - Include Select all and Unselect all.
 - Limit one generation action to 100 selected files. Users may run another action for the rest.
 - Request one file at a time from `GET /v1/api/webdl/requestdl` with `token`, `web_id`, `file_id`, `redirect=false`, and `append_name=true`.
 - Use at most four concurrent link requests.
 - Require the returned URL to use HTTPS.
-- Keep generated URLs in batch-tab document memory only. Regeneration replaces them.
+- Keep generated URLs in the requesting popup or batch-tab document memory only. Regeneration replaces them.
 - Render filename anchors with `target="_blank"` and `rel="noreferrer noopener"`. Omit custom Copy buttons.
 - Never call the browser Downloads API and never navigate without a user click.
 
 ## Controls and notifications
 
 - The popup exposes Pause everywhere and Pause on this hostname. Settings lists and removes exact-hostname exclusions.
+- Keep Select all, Unselect all, Create batch, and Settings visible in a fixed popup action bar. Render them as labeled Lucide icon controls with mouse-hover tooltips.
 - NSFW display is an explicit Settings opt-in.
 - Notifications are optional and off by default. Request permission only from the user's Enable notifications action.
 - When enabled, send at most one notification per batch when it becomes ready or first needs attention. Attention includes invalid authentication, a required password, a rate-limit pause, terminal failure, or timeout.
-- Open the dedicated batch tab automatically after confirmation.
+- Open the dedicated batch tab automatically after confirmation only when the user selected two or more sources. Keep a one-source batch in the popup unless TorBox reports several files or the user opens batch details.
 
 ## Accessibility
 
@@ -130,6 +133,7 @@ The extension never starts a local download. Zen follows a generated link only a
 - Ordinary batches recover for 24 hours. Private batches and generated links disappear after their approved lifecycle.
 - Stored passwords and raw source URLs are removed at their specified transition.
 - No final-link request occurs before Generate.
+- A confirmed one-source quick download waits for readiness, generates only when TorBox reports one file, and shows a clickable Download icon without opening a batch tab.
 - One action requests at most 100 selected files and renders HTTPS links without starting a browser download.
 - Optional notifications produce no more than one ready or attention notification per batch.
 - Automated tests, type checking, a production build, extension lint, and a manual latest-stable Zen-on-Windows smoke test pass before v1 is called complete.

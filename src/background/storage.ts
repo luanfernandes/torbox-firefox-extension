@@ -6,6 +6,7 @@ const CATALOG_KEY = "catalog";
 const BATCHES_KEY = "batches";
 const PRIVATE_BATCHES_KEY = "privateBatches";
 const SUMMARIES_KEY = "candidateSummaries";
+const QUICK_BATCHES_KEY = "quickBatches";
 
 const DEFAULT_SETTINGS: AppSettings = {
   keyValidated: false,
@@ -112,4 +113,32 @@ export async function deleteSummary(tabId: number): Promise<void> {
   const summaries = await getSummaries();
   delete summaries[String(tabId)];
   await browser.storage.session.set({ [SUMMARIES_KEY]: summaries });
+}
+
+async function getQuickBatchMap(): Promise<Record<string, string>> {
+  return ((await browser.storage.session.get(QUICK_BATCHES_KEY))[QUICK_BATCHES_KEY] as Record<string, string> | undefined) ?? {};
+}
+
+export async function getQuickBatchId(tabId: number): Promise<string | null> {
+  return (await getQuickBatchMap())[String(tabId)] ?? null;
+}
+
+export async function saveQuickBatch(tabId: number, batchId: string): Promise<void> {
+  const batches = await getQuickBatchMap();
+  batches[String(tabId)] = batchId;
+  await browser.storage.session.set({ [QUICK_BATCHES_KEY]: batches });
+}
+
+export async function deleteQuickBatch(tabId: number): Promise<void> {
+  const batches = await getQuickBatchMap();
+  delete batches[String(tabId)];
+  await browser.storage.session.set({ [QUICK_BATCHES_KEY]: batches });
+}
+
+export async function deleteQuickBatchReferences(batchId: string): Promise<void> {
+  const batches = await getQuickBatchMap();
+  for (const [tabId, storedBatchId] of Object.entries(batches)) {
+    if (storedBatchId === batchId) delete batches[tabId];
+  }
+  await browser.storage.session.set({ [QUICK_BATCHES_KEY]: batches });
 }

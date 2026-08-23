@@ -10,7 +10,7 @@ This file records owner decisions from the design-tree interview. Product behavi
 | Q2 | Inspect real link destinations only. |
 | Q3 | Support Hoster entries only in v1. |
 | Q4 | Hide NSFW Hosters until the user opts in. |
-| Q5 | Use a toolbar popup for selection and a dedicated batch tab for progress and generated links. |
+| Q5 | Use the toolbar popup for selection. Keep one-source progress and a sole generated file link in the popup; use the dedicated batch tab for larger or multi-file work. Amended after Q44. |
 | Q6 | Allow per-file selection and an explicit Generate all action. |
 | Q7 | Support password-protected links and allow temporary local password storage. |
 | Q8 | Recover ordinary batches after restart, observe them automatically for 24 hours, and retain terminal summaries for seven days or until dismissal. |
@@ -24,7 +24,7 @@ This file records owner decisions from the design-tree interview. Product behavi
 | Q16 | Start automatic scanning only after setup and API-key validation. |
 | Q17 | Disclose a candidate safety cap of at least 100. Choose the final higher value from Zen measurements. |
 | Q18 | Keep complete candidates in the isolated scanner until the popup asks for them. Store only counts and service identifiers automatically. |
-| Q19 | Strip URL fragments before deduplication and submission. |
+| Q19 | Strip ordinary navigation fragments before deduplication and submission, but preserve fragments for Mega domains because they contain required link data. Amended after Q44. |
 | Q20 | Accept embedded URL credentials, permit catalog-matched HTTP sources, and require generated links to use HTTPS. |
 | Q21 | Remove known unavailable Hosters from results. |
 | Q22 | Cap a batch at 60 candidates. |
@@ -35,7 +35,7 @@ This file records owner decisions from the design-tree interview. Product behavi
 | Q27 | Cap one link-generation action at 100 files. Further selections remain possible. |
 | Q28 | Omit ZIP generation from v1. |
 | Q29 | Make notifications optional and off by default. |
-| Q30 | Open the batch tab automatically after confirmation. |
+| Q30 | Open the batch tab automatically for two or more selected sources. Keep a one-source batch in the popup and offer the batch tab only when needed. Amended after Q44. |
 | Q31 | Treat v1 as a personal development project. Defer public distribution. |
 | Q32 | Verify v1 on the latest stable Zen Browser on Windows. Chromium and other operating systems come later. |
 | Q33 | Keep private-window batches ephemeral, without restart recovery or notifications. |
@@ -58,3 +58,8 @@ This file records owner decisions from the design-tree interview. Product behavi
 - The 2026-08-22 public Hoster catalog's regex domains match its `domains` arrays. V1 uses parsed hostname boundaries and normalizes internationalized domains.
 - Zen requires the user to grant private-window extension access. Private batches remain session-only after that grant.
 
+## Owner changes after Q44
+
+- Keep Select all, Unselect all, Create batch, and Settings permanently visible at the bottom of the popup as Lucide icons with hover tooltips.
+- Use the best-fitting Lucide icon whenever the owner requests an icon in future work.
+- A one-source Create action also authorizes generation of its sole reported file link once ready. It never starts a browser download.

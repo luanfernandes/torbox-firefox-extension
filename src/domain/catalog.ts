@@ -27,6 +27,8 @@ interface MatcherDomain {
   hosterName: string;
 }
 
+const FRAGMENT_SENSITIVE_HOSTS = new Set(["mega.nz", "mega.io", "mega.co.nz"]);
+
 export interface CatalogMatcher {
   domains: readonly MatcherDomain[];
 }
@@ -94,8 +96,25 @@ export function normalizeSourceUrl(source: string): URL | null {
   }
 }
 
+export function normalizeCandidateSourceUrl(source: string): URL | null {
+  try {
+    const url = new URL(source);
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      return null;
+    }
+    const hostname = url.hostname.toLowerCase();
+    const keepsFragment = [...FRAGMENT_SENSITIVE_HOSTS].some(
+      (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
+    );
+    if (!keepsFragment) url.hash = "";
+    return url;
+  } catch {
+    return null;
+  }
+}
+
 export function findCandidate(source: string, matcher: CatalogMatcher): CandidateLink | null {
-  const url = normalizeSourceUrl(source);
+  const url = normalizeCandidateSourceUrl(source);
   if (!url) {
     return null;
   }
