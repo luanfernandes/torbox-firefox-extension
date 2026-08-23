@@ -2,6 +2,17 @@
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Added a local page with intentionally invalid, neutral candidate links for safe store screenshots.
+- Added 512-pixel artwork for the extension listing.
+
+### Changed
+
+- Replaced the toolbar artwork with a green box and Lucide-style link mark, using new filenames to avoid stale browser icon caches.
+
 ## [0.1.1] - 2026-08-23
 
 ### Changed

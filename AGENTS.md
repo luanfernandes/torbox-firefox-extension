@@ -4,7 +4,7 @@ Build a WebExtension for the latest stable Zen Browser on Windows. Keep the impl
 
 ## Current phase
 
-V1 is implemented and passes automated verification plus isolated Zen 154 installation. Public Firefox and Zen release preparation is active. Authenticated TorBox checks and Mozilla submission tasks remain in `docs/release/release-checklist.md`. The design-tree interview is paused after Q44 and resumes at Q45.
+V1 is implemented. The owner reported that version 0.1.1 is awaiting Mozilla review, while `main` contains unreleased icon and screenshot work. Read `docs/project-status.md` before release, identity, packaging, artwork, or AMO work. The design-tree interview is paused after Q44 and resumes at Q45.
 
 ## Working rules
 
@@ -23,6 +23,7 @@ V1 is implemented and passes automated verification plus isolated Zen 154 instal
 
 ## Context pointers
 
+- **Project status:** Read `docs/project-status.md` before resuming work after a handoff or changing versions, identity, AMO submissions, artwork, packages, or release state.
 - **Product behavior:** Read `docs/product-spec.md` before changing automatic scanning, batches, UI states, privacy behavior, generated links, or acceptance criteria.
 - **Architecture:** Read `docs/architecture.md` before changing permissions, component boundaries, storage, matching, scheduling, API calls, batch state, or link generation.
 - **Delivery plan:** Read `docs/implementation-plan.md` before starting implementation, adding dependencies, planning tests, or packaging a release.
