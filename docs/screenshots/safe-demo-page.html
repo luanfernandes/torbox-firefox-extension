@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Legal Sample Downloads</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #090d18;
+        color: #f7f8fc;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background:
+          radial-gradient(circle at 15% 0%, rgb(49 121 255 / 18%), transparent 34rem),
+          radial-gradient(circle at 90% 10%, rgb(53 223 168 / 12%), transparent 30rem),
+          #090d18;
+      }
+
+      main {
+        width: min(1080px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 72px 0 96px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 18px;
+        color: #70e0b9;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: 0 0 18px currentColor;
+        content: "";
+      }
+
+      h1 {
+        max-width: 720px;
+        margin: 0;
+        font-size: clamp(42px, 6vw, 72px);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+      }
+
+      .intro {
+        max-width: 660px;
+        margin: 24px 0 46px;
+        color: #aeb7ca;
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .notice {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        width: fit-content;
+        margin-bottom: 24px;
+        padding: 12px 16px;
+        border: 1px solid rgb(112 224 185 / 28%);
+        border-radius: 12px;
+        background: rgb(112 224 185 / 7%);
+        color: #bcefdc;
+        font-size: 14px;
+      }
+
+      .notice strong {
+        color: #f7f8fc;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .download {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        min-width: 0;
+        padding: 20px;
+        border: 1px solid #252d41;
+        border-radius: 16px;
+        background: rgb(18 24 40 / 86%);
+        box-shadow: 0 18px 60px rgb(0 0 0 / 18%);
+        transition:
+          border-color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .download:hover {
+        border-color: #4b5b7a;
+        transform: translateY(-2px);
+      }
+
+      .file-icon {
+        display: grid;
+        flex: 0 0 46px;
+        width: 46px;
+        height: 46px;
+        place-items: center;
+        border-radius: 13px;
+        background: linear-gradient(145deg, #26334e, #172035);
+        color: #87a8ff;
+        font-weight: 800;
+      }
+
+      .details {
+        min-width: 0;
+      }
+
+      .download a {
+        display: block;
+        overflow: hidden;
+        color: #f7f8fc;
+        cursor: default;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.35;
+        pointer-events: none;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .download a:hover {
+        color: #9eb8ff;
+      }
+
+      .meta {
+        margin: 5px 0 0;
+        color: #7f8ba5;
+        font-size: 13px;
+      }
+
+      footer {
+        margin-top: 28px;
+        color: #68748d;
+        font-size: 13px;
+      }
+
+      @media (max-width: 720px) {
+        main {
+          width: min(100% - 28px, 560px);
+          padding-top: 44px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Screenshot demo</p>
+      <h1>Legal sample downloads</h1>
+      <p class="intro">
+        A clean test page for demonstrating supported-link discovery. Every filename is fictional and every
+        destination below is intentionally invalid.
+      </p>
+
+      <div class="notice"><strong>Safe demo:</strong> these links cannot download files or leave this page.</div>
+
+      <section class="grid" aria-label="Fictional sample downloads">
+        <article class="download">
+          <span class="file-icon">ZIP</span>
+          <div class="details">
+            <a href="https://1fichier.com/?DEMO-OPEN-SOURCE-PROJECT" tabindex="-1">Open-source project archive</a>
+            <p class="meta">ZIP · Fictional sample · 184 MB</p>
+          </div>
+        </article>
+
+        <article class="download">
+          <span class="file-icon">PDF</span>
+          <div class="details">
+            <a href="https://1fichier.com/?DEMO-PUBLIC-DOMAIN-BOOK" tabindex="-1">Public-domain book collection</a>
+            <p class="meta">PDF · Fictional sample · 42 MB</p>
+          </div>
+        </article>
+
+        <article class="download">
+          <span class="file-icon">MP4</span>
+          <div class="details">
+            <a href="https://mega.nz/file/DEMO-CREATIVE-COMMONS#INVALID-DEMO-KEY" tabindex="-1">Creative Commons sample video</a>
+            <p class="meta">MP4 · Fictional sample · 1.2 GB</p>
+          </div>
+        </article>
+
+        <article class="download">
+          <span class="file-icon">ISO</span>
+          <div class="details">
+            <a href="https://mega.nz/file/DEMO-LINUX-IMAGE#INVALID-DEMO-KEY" tabindex="-1">Community Linux image</a>
+            <p class="meta">ISO · Fictional sample · 2.8 GB</p>
+          </div>
+        </article>
+
+        <article class="download">
+          <span class="file-icon">CSV</span>
+          <div class="details">
+            <a href="https://1fichier.com/?DEMO-OPEN-DATASET" tabindex="-1">Open research dataset</a>
+            <p class="meta">CSV · Fictional sample · 96 MB</p>
+          </div>
+        </article>
+
+        <article class="download">
+          <span class="file-icon">WAV</span>
+          <div class="details">
+            <a href="https://mega.nz/file/DEMO-FREE-AUDIO#INVALID-DEMO-KEY" tabindex="-1">Royalty-free audio samples</a>
+            <p class="meta">WAV · Fictional sample · 315 MB</p>
+          </div>
+        </article>
+
+        <article class="download">
+          <span class="file-icon">ZIP</span>
+          <div class="details">
+            <a href="https://1fichier.com/?DEMO-EDUCATIONAL-ASSETS" tabindex="-1">Educational design assets</a>
+            <p class="meta">ZIP · Fictional sample · 128 MB</p>
+          </div>
+        </article>
+      </section>
+
+      <footer>Created only for Torbox Web Helper screenshots. No third-party content is hosted or accessed.</footer>
+    </main>
+
+    <script>
+      document.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", (event) => event.preventDefault());
+      });
+    </script>
+  </body>
+</html>
