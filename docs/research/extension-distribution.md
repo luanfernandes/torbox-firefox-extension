@@ -13,7 +13,7 @@ Only official browser and store documentation is cited. Time estimates are engin
 
 The shortest path is an AMO-signed Firefox extension. Zen's own documentation says it installs extensions from Mozilla Add-ons, so one Firefox release covers both Firefox and Zen without a separate Zen store submission. Firefox and Zen release builds require Mozilla signing for a normal persistent installation. Mozilla offers two channels: a public AMO listing with store discovery and automatic updates, or an unlisted signed XPI that the developer distributes. [Zen extension documentation](https://docs.zen-browser.app/user-manual/extensions), [Mozilla signing overview](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/)
 
-The current codebase is close to an AMO submission. The remaining work is mostly release preparation, privacy documentation, reviewer access, and the authenticated TorBox release checks already recorded in `docs/implementation-plan.md`. A public release should not go out before those checks pass.
+The current codebase is close to an AMO submission. The remaining work is mostly release preparation, privacy documentation, reviewer access, and authenticated TorBox release checks. A public release should not go out before those checks pass.
 
 Supporting Zen and Firefox on macOS and Linux is low effort because the extension contains no native executable or operating-system integration. Zen publishes desktop builds for Windows, macOS, and Linux. The extension package itself should be shared across those systems, but the UI, private-window behavior, suspend and restart recovery, notifications, and popup placement still need hands-on tests on each OS. [Zen download page](https://zen-browser.app/download/)
 
@@ -41,7 +41,7 @@ All Firefox extensions need Mozilla signing for release and beta Firefox. Mozill
 
 1. Pick the permanent extension identity before the first submission. Manifest V3 signing requires a unique `browser_specific_settings.gecko.id`. The current `torbox-web-downloads@local` is syntactically valid, but its name says it is a local build. Changing the ID after release creates a different extension identity and a different storage namespace, so users would have to install again and re-enter their key. [Mozilla add-on ID documentation](https://extensionworkshop.com/documentation/develop/extensions-and-the-add-on-id/)
 
-2. Finish the authenticated release checks in `docs/implementation-plan.md`. They cover create response encoding, Web Download readiness, list paging, MD5 reconciliation, `requestdl` response shape, HTTPS generated URLs, password cleanup, private-session loss, restart recovery, and partial failures.
+2. Finish the authenticated release checks. They cover create response encoding, Web Download readiness, list paging, MD5 reconciliation, `requestdl` response shape, HTTPS generated URLs, password cleanup, private-session loss, restart recovery, and partial failures.
 
 3. Run the automated suite and repeat the current latest-stable Zen smoke test. Add a manual Firefox test. Test a clean installation as well as an update from the previous version.
 

@@ -1,6 +1,6 @@
 # Contributing
 
-Bug reports and focused pull requests are welcome. Read [AGENTS.md](AGENTS.md), [CONTEXT.md](CONTEXT.md), and the relevant product or architecture document before changing behavior.
+Bug reports and focused pull requests are welcome. Review the README, privacy policy, and existing tests before changing behavior.
 
 ## Development setup
 

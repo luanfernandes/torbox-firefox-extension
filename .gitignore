@@ -6,3 +6,18 @@ release-artifacts/
 coverage/
 .tmp/
 *.log
+
+# Local agent context and planning notes
+/AGENTS.md
+/CONTEXT.md
+/docs/project-status.md
+/docs/product-spec.md
+/docs/architecture.md
+/docs/implementation-plan.md
+/docs/release/release-checklist.md
+/docs/research/torbox-api.md
+/docs/research/mega-links.md
+/docs/grilling-log.md
+/docs/agents/issue-tracker.md
+/docs/agents/triage-labels.md
+/docs/agents/domain.md

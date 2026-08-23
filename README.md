@@ -81,11 +81,11 @@ Settings explains that Zen extension storage is local but is not an operating-sy
 
 The popup displays the full source URL during selection, including embedded URL credentials and required Mega fragments. Confirmed ordinary batches may store unresolved source URLs and Hoster passwords locally. A Mega fragment can contain its decryption key. The extension deletes each password and replaces the raw URL after the create outcome, cancellation, or 24-hour cutoff. Resolved history keeps the source hostname and path, without credentials, query, or fragment.
 
-See [PRIVACY.md](PRIVACY.md) and [docs/grilling-log.md](docs/grilling-log.md) for the full data and product decisions.
+See [PRIVACY.md](PRIVACY.md) for the complete data-handling disclosure.
 
 ## Public release status
 
-The source, automated verification, packaging workflow, AMO listing copy, reviewer notes, and privacy policy are kept in this repository. The remaining public-release gates are listed in [docs/release/release-checklist.md](docs/release/release-checklist.md).
+The source, automated verification, packaging workflow, AMO listing copy, reviewer notes, and privacy policy are kept in this repository. Release builds and notes are published through GitHub Releases.
 
 Report normal bugs through [GitHub Issues](https://github.com/luanfernandes/torbox-firefox-extension/issues). Follow [SECURITY.md](SECURITY.md) for reports that contain credentials or other sensitive data.
 
