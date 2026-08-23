@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Sensitive security report
+    url: https://github.com/luanfernandes/torbox-firefox-extension/security/advisories/new
+    about: Use private vulnerability reporting. Never post credentials or exploit details publicly.
+  - name: TorBox support
+    url: https://support.torbox.app/
+    about: Use TorBox support for account, billing, quota, and server-side download failures.

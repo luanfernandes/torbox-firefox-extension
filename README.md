@@ -1,8 +1,10 @@
-# TorBox Web Downloads for Zen
+# TorBox Web Downloads for Firefox and Zen
 
-This personal WebExtension finds TorBox-supported Hoster links on ordinary web pages. It creates TorBox Web Downloads after user confirmation. A one-link selection can finish in the popup; larger selections use a dedicated batch tab.
+This unofficial WebExtension finds TorBox-supported Hoster links on ordinary web pages. It creates TorBox Web Downloads after user confirmation. A one-link selection can finish in the popup; larger selections use a dedicated batch tab.
 
-V1 targets the latest stable Zen Browser on Windows. It uses Firefox WebExtension APIs and does not promise Chromium or other operating-system support yet.
+The first release targets Firefox and Zen Browser on Windows. It uses Firefox WebExtension APIs. Chromium is not supported yet.
+
+This project is independent of TorBox and is not endorsed by TorBox. A TorBox account and API key are required.
 
 ## What v1 does
 
@@ -29,7 +31,11 @@ pnpm verify
 
 The unpacked extension is written to `dist`.
 
-## Load in Zen
+## Install
+
+The public AMO listing is being prepared. Firefox and Zen require Mozilla to sign an extension before it can remain installed in a normal release build. Files marked `unsigned` in GitHub Releases are reviewer and development packages, not normal-install packages.
+
+Until the AMO listing is available, developers can load the extension temporarily:
 
 1. Build the extension.
 2. Open `about:debugging#/runtime/this-firefox` in Zen.
@@ -37,7 +43,7 @@ The unpacked extension is written to `dist`.
 4. Select `dist/manifest.json`.
 5. Open the extension Settings page and save a TorBox API key.
 
-Temporary installation ends when Zen closes. This matches the current personal-development distribution choice.
+Temporary installation ends when Firefox or Zen closes.
 
 To use private windows, open the extension's Zen settings and grant private-window access. Private batches then remain available only for that browser session. They do not recover after Zen exits and never send notifications.
 
@@ -60,6 +66,12 @@ Settings explains that Zen extension storage is local but is not an operating-sy
 The popup displays the full source URL during selection, including embedded URL credentials and required Mega fragments. Confirmed ordinary batches may store unresolved source URLs and Hoster passwords locally. A Mega fragment can contain its decryption key. The extension deletes each password and replaces the raw URL after the create outcome, cancellation, or 24-hour cutoff. Resolved history keeps the source hostname and path, without credentials, query, or fragment.
 
 See [PRIVACY.md](PRIVACY.md) and [docs/grilling-log.md](docs/grilling-log.md) for the full data and product decisions.
+
+## Public release status
+
+The source, automated verification, packaging workflow, AMO listing copy, reviewer notes, and privacy policy are kept in this repository. The remaining public-release gates are listed in [docs/release/release-checklist.md](docs/release/release-checklist.md).
+
+Report normal bugs through [GitHub Issues](https://github.com/luanfernandes/torbox-firefox-extension/issues). Follow [SECURITY.md](SECURITY.md) for reports that contain credentials or other sensitive data.
 
 ## TorBox contract checks still requiring an account
 

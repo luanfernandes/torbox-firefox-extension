@@ -1,6 +1,6 @@
 # Product specification
 
-Status: v1 implementation authorized on 2026-08-22
+Status: v1 implemented; Firefox and Zen public-release preparation started on 2026-08-22
 
 ## Product outcome
 
@@ -11,7 +11,7 @@ The extension never starts a local download. Zen follows a generated link only a
 ## V1 boundary
 
 - Verify on the latest stable Zen Browser on Windows. Use Firefox WebExtension APIs so later Firefox support remains practical.
-- Treat v1 as a personal development build loaded through Zen's debugging tools. Signing and public distribution come later.
+- Prepare v1 for Mozilla signing and a public AMO listing. Keep GitHub packages labeled as unsigned until Mozilla returns a signed XPI.
 - Scan top-level HTTP and HTTPS documents after onboarding and API-key validation.
 - Inspect `a[href]` and `area[href]` only. Ignore text URLs, embedded frames, buttons, page scripts, and shadow-root internals.
 - Provide a global pause and exact-hostname exclusions.

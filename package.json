@@ -1,9 +1,24 @@
 {
-  "name": "torbox-zen-extension",
+  "name": "torbox-firefox-extension",
   "version": "0.1.0",
   "private": true,
+  "description": "Unofficial Firefox and Zen extension for finding and preparing TorBox-supported Hoster links.",
+  "license": "MIT",
+  "author": "Luan Fernandes",
+  "homepage": "https://github.com/luanfernandes/torbox-firefox-extension#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luanfernandes/torbox-firefox-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luanfernandes/torbox-firefox-extension/issues"
+  },
   "type": "module",
   "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=11"
+  },
   "scripts": {
     "build": "node scripts/build.mjs",
     "dev": "node scripts/build.mjs --watch",

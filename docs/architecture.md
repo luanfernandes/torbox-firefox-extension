@@ -1,6 +1,6 @@
 # Architecture plan
 
-Status: v1 implementation authorized on 2026-08-22
+Status: v1 implemented; Firefox and Zen release packaging in progress
 
 Read `product-spec.md`, `grilling-log.md`, and `research/torbox-api.md` before changing behavior or TorBox calls.
 
@@ -11,7 +11,7 @@ Read `product-spec.md`, `grilling-log.md`, and `research/torbox-api.md` before c
 - TypeScript bundled to classic scripts.
 - Native `browser.*` promise APIs.
 - Plain HTML, CSS, and DOM rendering.
-- Temporary developer installation. No signing or public-store metadata in v1.
+- Public source and release packaging on GitHub. Mozilla signing and AMO distribution provide normal Firefox and Zen installation.
 
 ## Components
 

@@ -4,11 +4,11 @@ Build a WebExtension for the latest stable Zen Browser on Windows. Keep the impl
 
 ## Current phase
 
-V1 is implemented and passes automated verification plus isolated Zen 154 installation. Authenticated TorBox response checks in `docs/implementation-plan.md` still require a user-owned key and controlled test files. The design-tree interview is paused after Q44 and resumes at Q45.
+V1 is implemented and passes automated verification plus isolated Zen 154 installation. Public Firefox and Zen release preparation is active. Authenticated TorBox checks and Mozilla submission tasks remain in `docs/release/release-checklist.md`. The design-tree interview is paused after Q44 and resumes at Q45.
 
 ## Working rules
 
-- Verify v1 on the latest stable Zen Browser on Windows. Treat other browsers and operating systems as later work.
+- Verify v1 on the latest stable Firefox and Zen Browser on Windows. Treat Chromium and other operating systems as later work.
 - Scan every eligible top-level HTTP and HTTPS page automatically. Keep the required broad site access visible in the manifest, onboarding, store listing, and privacy disclosure.
 - Keep the TorBox token and every TorBox request in the background context. Page-scanning code receives public matcher data, publishes counts automatically, and returns full matched candidates only when the popup requests them.
 - Treat a user batch as an extension queue. The TorBox WebDL API currently creates one link per request.
@@ -26,6 +26,7 @@ V1 is implemented and passes automated verification plus isolated Zen 154 instal
 - **Product behavior:** Read `docs/product-spec.md` before changing automatic scanning, batches, UI states, privacy behavior, generated links, or acceptance criteria.
 - **Architecture:** Read `docs/architecture.md` before changing permissions, component boundaries, storage, matching, scheduling, API calls, batch state, or link generation.
 - **Delivery plan:** Read `docs/implementation-plan.md` before starting implementation, adding dependencies, planning tests, or packaging a release.
+- **Public release:** Read `docs/release/release-checklist.md` before changing the permanent identity, version, release artifacts, GitHub automation, signing, AMO metadata, or reviewer material.
 - **Domain language:** Read `CONTEXT.md` before naming product concepts, models, messages, tests, or issues.
 - **TorBox API contract:** Read `docs/research/torbox-api.md` before implementing or reviewing a TorBox request, response, rate limit, or batch assumption. Recheck the live official contract when that note is stale.
 - **Mega links:** Read `docs/research/mega-links.md` before changing fragment normalization, Mega matching, source hashing, persistence, or submission.

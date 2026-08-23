@@ -1,6 +1,8 @@
-# Privacy notes
+# Privacy policy
 
-V1 is a local personal-development extension. It has no analytics, telemetry, advertising, crash reporting, or remote UI code.
+Effective date: August 22, 2026
+
+TorBox Web Downloads (Unofficial) has no analytics, telemetry, advertising, crash reporting, or remote UI code. This policy describes the data the extension handles locally and sends to TorBox.
 
 ## Page access
 
@@ -49,3 +51,13 @@ Zen disables private-window access until the user grants it. Private batches use
 ## Remote deletion
 
 Dismissing local history deletes local batch records only. V1 never deletes a Web Download from the TorBox account.
+
+## Third-party processing
+
+TorBox processes authenticated API requests and the selected source data described above. TorBox is a separate service with its own terms and privacy practices. This extension does not control TorBox account records or TorBox's server-side retention.
+
+## Contact and changes
+
+Report privacy questions through the project's [GitHub issue tracker](https://github.com/luanfernandes/torbox-firefox-extension/issues). Do not include API keys, passwords, generated links, private source URLs, or other sensitive data in a public issue. Use the private reporting route in [SECURITY.md](SECURITY.md) for sensitive reports.
+
+Material policy changes will update this file, its effective date, and the extension release notes.

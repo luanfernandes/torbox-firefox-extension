@@ -1,0 +1,44 @@
+name: Verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install pnpm
+        run: npm install --global pnpm@11.19.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify extension
+        run: pnpm verify
+
+      - name: Build AMO submission package
+        run: pnpm package
+
+      - name: Upload unsigned package
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-unsigned-package
+          path: web-ext-artifacts/*.zip
+          if-no-files-found: error
+          retention-days: 14

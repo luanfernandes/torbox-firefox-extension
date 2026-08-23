@@ -1,0 +1,70 @@
+name: Bug report
+description: Report a reproducible extension problem without including secrets.
+title: "[Bug]: "
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include API keys, passwords, embedded URL credentials, Mega fragments, generated links, or private account responses.
+
+  - type: input
+    id: version
+    attributes:
+      label: Extension version
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Firefox
+        - Zen Browser
+    validations:
+      required: true
+
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser version and operating system
+      placeholder: Zen 154 on Windows 11
+    validations:
+      required: true
+
+  - type: input
+    id: hoster
+    attributes:
+      label: Hoster name
+      description: Leave the source URL out unless a public, sanitized example is safe.
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the page, popup, or batch state without posting secrets.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: sanitization
+    attributes:
+      label: Sensitive-data check
+      options:
+        - label: I removed API keys, passwords, embedded credentials, Mega fragments, generated links, and private TorBox data.
+          required: true

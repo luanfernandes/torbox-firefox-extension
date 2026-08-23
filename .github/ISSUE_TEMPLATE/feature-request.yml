@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest a focused change to the extension.
+title: "[Feature]: "
+labels: [enhancement, needs-triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the workflow that is difficult today.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain what the extension should do and what should remain unchanged.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Target browser
+      options:
+        - Firefox and Zen
+        - Chromium browsers
+        - Both
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Data impact
+      options:
+        - label: I described any new page access, storage, network request, or credential handling this feature would need.
+          required: true
