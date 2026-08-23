@@ -20,7 +20,7 @@ The public AMO listing is the normal installation channel. GitHub keeps source, 
 - [ ] Record a complete pass on the latest stable Zen Browser for Windows.
 - [x] Run `pnpm verify` from a clean GitHub Actions checkout with the lockfile frozen.
 - [x] Inspect the tracked tree, package, and source archive for API keys, passwords, source credentials, Mega keys, generated links, account responses, and browser-profile data. Repeat this check after screenshots and manual-test logs exist.
-- [ ] Confirm `package.json`, the manifest, changelog, tag, and release title use version `0.1.1`.
+- [x] Confirm `package.json`, the manifest, changelog, tag, and release title use version `0.1.1`.
 
 ## Owner and AMO work
 
