@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@noble/hashes": "2.3.0",
-    "lucide": "1.33.0"
+    "lucide": "1.48.0"
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "143.0.0",
